@@ -93,8 +93,8 @@ fn main() {
 	logql_labels := fp.bool('labels', `t`, false, 'get labels')
 	logql_label := fp.string('label', `v`, '', 'get label values')
 
-	logql_start := fp.string('start', `v`, now(3600), 'start nanosec timestamp')
-	logql_end := fp.string('end', `v`, now(0), 'end nanosec timestamp')
+	logql_start := fp.string('start', `s`, now(3600), 'start nanosec timestamp')
+	logql_end := fp.string('end', `e`, now(0), 'end nanosec timestamp')
 
 	fp.finalize() or {
 		eprintln(err)
