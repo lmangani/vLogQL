@@ -19,19 +19,19 @@ v -o vlogql -prod vlogql.v
 
 #### Usage
 ```
-vlogql v0.1.0
+vlogql v0.1.1
 -----------------------------------------------
 Usage: vlogql [options] [ARGS]
-Description: Query LogQL Logs
+
+Description: LogQL Query CLI
 
 Options:
-  -l, --limit <int>         number of logs to show
-  -a, --api <string>        logql api
-  -q, --query <string>      logql query
+  -l, --limit <int>         logql query limit [ENV: LOGQL_LIMIT]
+  -a, --api <string>        logql api [ENV: LOGQL_API]
+  -q, --query <string>      logql query [ENV: LOGQL_QUERY]
   -t, --labels              get labels
   -v, --label <string>      get label values
   -h, --help                display this help and exit
-  --version                 output version information and exit
 ```
 
 ```
