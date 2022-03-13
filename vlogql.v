@@ -63,15 +63,25 @@ fn fetch_labels(api string, label string) {
 }
 
 
+fn set_value(s string) ?string {
+	if s != '' {
+		return s
+	}
+	return none
+}
+
 fn main() {
         mut fp := flag.new_flag_parser(os.args)
         fp.application('vlogql')
-        fp.version('v0.1.0')
+        fp.version('v0.1.1')
         fp.description('Query LogQL Logs')
         fp.skip_executable()
-        logql_limit := fp.int('limit', `l`, 5, 'number of logs to show')
-        logql_api := fp.string('api', `a`, 'http://localhost:3100', 'logql api')
-        logql_query := fp.string('query', `q`, '', 'logql query')
+        env_limit := set_value(os.getenv('LOGQL_LIMIT')) or { '5' } 
+        logql_limit := fp.int('limit', `l`, env_limit.int(), 'number of logs to show')
+        env_api := set_value(os.getenv('LOGQL_API')) or { 'http://localhost:3100' }
+        logql_api := fp.string('api', `a`, env_api, 'logql api')
+        env_query := set_value(os.getenv('LOGQL_QUERY')) or { '' }
+        logql_query := fp.string('query', `q`, env_query, 'logql query')
         logql_labels := fp.bool('labels', `t`, false, 'get labels')
         logql_label := fp.string('label', `v`, '', 'get label values')
 
@@ -83,16 +93,19 @@ fn main() {
 
 	if logql_labels {
           fetch_labels(logql_api, '')
+	  return
 	}
 	else if utf8_str_len(logql_label) > 0 {
           fetch_labels(logql_api, logql_label)
+	  return
 	}
 	else if utf8_str_len(logql_query) > 0 {
           println('Fetching logs...')
           fetch_logs(logql_api, logql_query, logql_limit)
+	  return
 	} else {
-                println(fp.usage())
-		return
+           println(fp.usage())
+	   return
 	}
 
 }
