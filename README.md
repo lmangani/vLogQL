@@ -6,12 +6,18 @@
 cLoki / LogQL Client in [vlang](https://vlang.io/)
 
 
-### Build
+### Instructions
+#### Install V
+```bash
+git clone https://github.com/vlang/v
+(cd v && make && v symlink)
 ```
+#### Build
+```bash
 v -o vlogql -prod vlogql.v
 ```
 
-### Usage
+#### Usage
 ```
 vlogql v0.1.0
 -----------------------------------------------
@@ -26,7 +32,6 @@ Options:
   --version                 output version information and exit
 ```
 
-### Example
 ```
 ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 5
 Fetching logs...
