@@ -2,6 +2,7 @@ import os
 import json
 import flag
 import term
+import time
 import net.http
 
 struct Response {
@@ -27,8 +28,8 @@ struct Values {
 	log string
 }
 
-fn fetch_logs(api string, query string, num int, show_labels bool) {
-	data := http.get_text('$api/loki/api/v1/query_range?query=$query&limit=$num')
+fn fetch_logs(api string, query string, num int, show_labels bool, start string, end string) {
+	data := http.get_text('$api/loki/api/v1/query_range?query=$query&limit=$num&start=$start&end=$end')
 	res := json.decode(Response, data) or { exit(1) }
 	println('---------- Logs for: $query')
 	for row in res.data.result {
@@ -71,6 +72,12 @@ fn set_value(s string) ?string {
 	return none
 }
 
+fn now(diff int) string {
+	ts := time.utc()
+	subts := ts.unix_time_milli() - (diff * 1000)
+	return '${subts}000000'
+}
+
 fn main() {
 	mut fp := flag.new_flag_parser(os.args)
 	fp.application('vlogql')
@@ -86,6 +93,9 @@ fn main() {
 	logql_labels := fp.bool('labels', `t`, false, 'get labels')
 	logql_label := fp.string('label', `v`, '', 'get label values')
 
+	logql_start := fp.string('start', `v`, now(3600), 'start nanosec timestamp')
+	logql_end := fp.string('end', `v`, now(0), 'end nanosec timestamp')
+
 	fp.finalize() or {
 		eprintln(err)
 		println(fp.usage())
@@ -93,8 +103,7 @@ fn main() {
 	}
 
 	if utf8_str_len(logql_query) > 0 {
-		// println('Fetching logs...')
-		fetch_logs(logql_api, logql_query, logql_limit, logql_labels)
+		fetch_logs(logql_api, logql_query, logql_limit, logql_labels, logql_start, logql_end)
 		return
 	} else if logql_labels {
 		fetch_labels(logql_api, '')
