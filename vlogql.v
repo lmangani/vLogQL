@@ -1,4 +1,3 @@
-### vlogql (c) 2022 QXIP BV 
 import os
 import json
 import flag
