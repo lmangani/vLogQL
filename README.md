@@ -3,7 +3,7 @@
 [![vlang-build](https://github.com/lmangani/vlogCLI/actions/workflows/vlang.yml/badge.svg)](https://github.com/lmangani/vlogCLI/actions/workflows/vlang.yml)
 
 # vLogQL
-cLoki / LogQL Client in V
+cLoki / LogQL Client in [vlang](https://vlang.io/)
 
 
 ### Build
