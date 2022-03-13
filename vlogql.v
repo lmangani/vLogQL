@@ -41,7 +41,7 @@ fn fetch_logs(api string, query string, num int) {
 
 fn main() {
         mut fp := flag.new_flag_parser(os.args)
-        fp.application('logql_client')
+        fp.application('vlogql')
         fp.version('v0.1.0')
         fp.description('Query LogQL Logs')
         fp.skip_executable()
