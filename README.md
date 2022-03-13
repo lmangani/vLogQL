@@ -2,8 +2,8 @@
 
 [![vlang-build-pipeline](https://github.com/lmangani/vlogCLI/actions/workflows/vlang.yml/badge.svg)](https://github.com/lmangani/vlogCLI/actions/workflows/vlang.yml)
 
-# vlogCLI
-LogQL Client in V
+# vLogQL
+cLoki / LogQL Client in V
 
 
 ### Build
