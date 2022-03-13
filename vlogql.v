@@ -17,7 +17,7 @@ mut:
 
 struct Result {
 mut:
-        stream string
+        stream map[string]string
         values [][]string
 }
 
@@ -26,13 +26,12 @@ struct Values {
         log string
 }
 
-fn fetch_logs(api string, query string, num int) {
+fn fetch_logs(api string, query string, num int, show_labels bool) {
         data := http.get_text('${api}/loki/api/v1/query_range?query=${query}&limit=${num}')
         res := json.decode(Response, data) or { exit(1) }
         println('---------- Logs for: ${query}')
         for row in res.data.result {
-	  // TODO: parse & display labels
-          // println('Labels: ${row.stream}')
+          if show_labels { println('Log Labels: ${row.stream}') }
           for log in row.values {
              println(log[1])
           }
@@ -90,17 +89,16 @@ fn main() {
                 return
         }
 
-	if logql_labels {
+	if utf8_str_len(logql_query) > 0 {
+          // println('Fetching logs...')
+          fetch_logs(logql_api, logql_query, logql_limit, logql_labels)
+	  return
+	} else if logql_labels {
           fetch_labels(logql_api, '')
 	  return
 	}
 	else if utf8_str_len(logql_label) > 0 {
           fetch_labels(logql_api, logql_label)
-	  return
-	}
-	else if utf8_str_len(logql_query) > 0 {
-          println('Fetching logs...')
-          fetch_logs(logql_api, logql_query, logql_limit)
 	  return
 	} else {
            println(fp.usage())
