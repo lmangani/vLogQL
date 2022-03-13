@@ -1,6 +1,7 @@
 import os
 import json
 import flag
+import term
 import net.http
 
 struct Response {
@@ -31,7 +32,10 @@ fn fetch_logs(api string, query string, num int, show_labels bool) {
         res := json.decode(Response, data) or { exit(1) }
         println('---------- Logs for: ${query}')
         for row in res.data.result {
-          if show_labels { println('Log Labels: ${row.stream}') }
+          if show_labels { 
+		print(term.gray("Log Labels: "))
+		print(term.bold("${row.stream}\n"))
+	  }
           for log in row.values {
              println(log[1])
           }
@@ -49,14 +53,14 @@ fn fetch_labels(api string, label string) {
         data := http.get_text('${api}/loki/api/v1/label/${label}/values')
         res := json.decode(Labels, data) or { exit(1) }
         println('---------- Values for: ${label}')
-        println(res.data)
+	println(term.bold(res.data.str()))
         return
 
      } else {
         data := http.get_text('${api}/loki/api/v1/labels')
         res := json.decode(Labels, data) or { exit(1) }
         println('---------- Labels:')
-        println(res.data)
+	println(term.bold(res.data.str()))
         return
      }
 }
