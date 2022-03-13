@@ -33,6 +33,8 @@ Options:
   -q, --query <string>      logql query [LOGQL_QUERY]
   -t, --labels              get labels
   -v, --label <string>      get label values
+  -s, --start <string>      start nanosec timestamp
+  -e, --end <string>        end nanosec timestamp
   -h, --help                display this help and exit
 ```
 
