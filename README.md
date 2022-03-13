@@ -7,6 +7,8 @@ cLoki / LogQL Client in [vlang](https://vlang.io/)
 
 
 ### Instructions
+Download a [linux binary release](https://github.com/lmangani/vLogQL/releases) or build from source
+
 #### Install V
 ```bash
 git clone https://github.com/vlang/v
