@@ -25,9 +25,11 @@ Usage: vlogql [options] [ARGS]
 Description: Query LogQL Logs
 
 Options:
+  -l, --limit <int>         number of logs to show
   -a, --api <string>        logql api
   -q, --query <string>      logql query
-  -l, --limit <int>         limit logs to show
+  -t, --labels              get labels
+  -v, --label <string>      get label values
   -h, --help                display this help and exit
   --version                 output version information and exit
 ```
