@@ -66,4 +66,4 @@ LOGQL_API="https://cloki:3100" ./vlogql --label type
 -----
 
 ### License
-Licensed under MIT, sponsored by [qxip](https://metrico.in)
+Licensed under MIT, sponsored by [qxip](https://metrico.in) as part of the [cLoki](https://cloki.org) project
