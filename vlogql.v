@@ -79,11 +79,11 @@ fn main() {
         fp.description('LogQL Query CLI')
         fp.skip_executable()
         env_limit := set_value(os.getenv('LOGQL_LIMIT')) or { '5' } 
-	logql_limit := fp.int('limit', `l`, env_limit.int(), 'logql query limit [ENV: LOGQL_LIMIT]')
+	logql_limit := fp.int('limit', `l`, env_limit.int(), 'logql query limit [LOGQL_LIMIT]')
         env_api := set_value(os.getenv('LOGQL_API')) or { 'http://localhost:3100' }
-	logql_api := fp.string('api', `a`, env_api, 'logql api [ENV: LOGQL_API]')
+	logql_api := fp.string('api', `a`, env_api, 'logql api [LOGQL_API]')
         env_query := set_value(os.getenv('LOGQL_QUERY')) or { '' }
-	logql_query := fp.string('query', `q`, env_query, 'logql query [ENV: LOGQL_QUERY]')
+	logql_query := fp.string('query', `q`, env_query, 'logql query [LOGQL_QUERY]')
         logql_labels := fp.bool('labels', `t`, false, 'get labels')
         logql_label := fp.string('label', `v`, '', 'get label values')
 

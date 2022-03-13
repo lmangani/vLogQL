@@ -26,9 +26,9 @@ Usage: vlogql [options] [ARGS]
 Description: LogQL Query CLI
 
 Options:
-  -l, --limit <int>         logql query limit [ENV: LOGQL_LIMIT]
-  -a, --api <string>        logql api [ENV: LOGQL_API]
-  -q, --query <string>      logql query [ENV: LOGQL_QUERY]
+  -l, --limit <int>         logql query limit [LOGQL_LIMIT]
+  -a, --api <string>        logql api [LOGQL_API]
+  -q, --query <string>      logql query [LOGQL_QUERY]
   -t, --labels              get labels
   -v, --label <string>      get label values
   -h, --help                display this help and exit
@@ -36,7 +36,6 @@ Options:
 
 ```bash
 LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 5
-Fetching logs...
 ---------- Logs for: {type="clickhouse"} |~ "MiB"
 2022.03.13 10:39:19.765860 [ 29849 ] {} <Debug> MemoryTracker: Peak memory usage (for query): 8.11 MiB.
 2022.03.13 10:39:19.761259 [ 29849 ] {115c1357-81d3-4277-ab04-882306f76e9d} <Debug> MemoryTracker: Peak memory usage (for query): 4.12 MiB.
