@@ -13,10 +13,9 @@ v -o vlogql -prod vlogql.v
 
 ### Usage
 ```
-logql_client v0.1.0
+vlogql v0.1.0
 -----------------------------------------------
-Usage: logql_client [options] [ARGS]
-
+Usage: vlogql [options] [ARGS]
 Description: Query LogQL Logs
 
 Options:
