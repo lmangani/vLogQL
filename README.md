@@ -31,7 +31,7 @@ Options:
   -l, --limit <int>         logql query limit [LOGQL_LIMIT]
   -a, --api <string>        logql api [LOGQL_API]
   -q, --query <string>      logql query [LOGQL_QUERY]
-  -t, --labels              get labels
+  -t, --labels <bool>       get labels
   -v, --label <string>      get label values
   -s, --start <string>      start nanosec timestamp
   -e, --end <string>        end nanosec timestamp
