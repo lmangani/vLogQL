@@ -11,7 +11,7 @@ LogQL Client in V
 v -o vlogcli -prod vlogcli.v
 ```
 
-### Usage
+### Options
 ```
 cloki_client v0.1.0
 -----------------------------------------------
@@ -27,6 +27,7 @@ Options:
   --version                 output version information and exit
 ```
 
+### Usage
 ```
 ./vlogcli --query '{type="clickhouse"} |~ "MiB"' --num 5
 Fetching logs...
