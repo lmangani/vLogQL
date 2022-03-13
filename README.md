@@ -10,3 +10,19 @@ LogQL Client in V
 ```
 v -o vlogcli -prod vlogcli.v
 ```
+
+### Usage
+```
+cloki_client v0.1.0
+-----------------------------------------------
+Usage: cloki_client [options] [ARGS]
+
+Description: Query LogQL Logs
+
+Options:
+  -a, --api <string>        logql api
+  -q, --query <string>      logql query
+  -n, --num <int>           number of logs to show
+  -h, --help                display this help and exit
+  --version                 output version information and exit
+```
