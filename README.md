@@ -13,7 +13,7 @@ v -o vlogql -prod vlogql.v
 
 ### Usage
 ```
-cloki_client v0.1.0
+logql_client v0.1.0
 -----------------------------------------------
 Usage: logql_client [options] [ARGS]
 
