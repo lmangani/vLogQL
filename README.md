@@ -27,7 +27,7 @@ git clone https://github.com/lmangani/vlogql
 ```
 
 
-#### 🔎 Usage
+### 🔎 Usage
 ```
 vlogql v0.1.1
 -----------------------------------------------
