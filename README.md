@@ -54,7 +54,15 @@ LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' -
 
 #### Query w/ Labels
 ```bash
-LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 5 --labels
+LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 4 --labels
+```
+```
+---------- Logs for: {type="clickhouse"} |~ "MiB"
+Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 'clickhouse'}
+2022.03.14 09:53:31.017408 [ 19639 ] {} <Debug> MemoryTracker: Peak memory usage (for query): 4.14 MiB.
+2022.03.14 09:53:31.021778 [ 19639 ] {} <Debug> MemoryTracker: Peak memory usage (for query): 8.18 MiB.
+2022.03.14 09:53:31.021759 [ 19639 ] {785ba1fa-3be3-4023-8a95-de4b92c096a4} <Debug> MemoryTracker: Peak memory usage (for query): 8.18 MiB.
+2022.03.14 09:53:31.017389 [ 19639 ] {a34cbcc9-d11a-4a0a-8c7a-634e00322900} <Debug> MemoryTracker: Peak memory usage (for query): 4.14 MiB.
 ```
 #### Query Labels
 ```bash
