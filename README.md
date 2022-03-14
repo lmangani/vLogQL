@@ -60,9 +60,17 @@ LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' -
 ```bash
 LOGQL_API="https://cloki:3100" ./vlogql --labels
 ```
+```
+---------- Labels:
+['response', 'host', 'type']
+```
 #### Query Label Values
 ```bash
 LOGQL_API="https://cloki:3100" ./vlogql --label type
+```
+```
+---------- Values for: type
+['clickhouse', 'prometheus']
 ```
 
 -----
