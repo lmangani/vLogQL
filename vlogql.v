@@ -6,7 +6,7 @@ import flag
 import term
 import time
 import net.http
-import v.mod
+import v.vmod
 
 struct Response {
 mut:
