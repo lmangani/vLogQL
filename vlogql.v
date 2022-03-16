@@ -1,9 +1,12 @@
+module main 
+
 import os
 import json
 import flag
 import term
 import time
 import net.http
+import v.mod
 
 struct Response {
 mut:
@@ -80,9 +83,10 @@ fn now(diff int) string {
 
 fn main() {
 	mut fp := flag.new_flag_parser(os.args)
-	fp.application('vlogql')
-	fp.version('v0.1.1')
-	fp.description('LogQL Query CLI')
+	mod := vmod.from_file('./v.mod') or { panic(err) }
+	fp.application(mod.name)
+	fp.version(mod.version)
+	fp.description(mod.description)
 	fp.skip_executable()
 	env_limit := set_value(os.getenv('LOGQL_LIMIT')) or { '5' }
 	logql_limit := fp.int('limit', `l`, env_limit.int(), 'logql query limit [LOGQL_LIMIT]')
