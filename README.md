@@ -29,7 +29,7 @@ git clone https://github.com/lmangani/vlogql
 
 ### 🔎 Usage
 ```
-vlogql v0.1.1
+vlogql v0.1.2
 -----------------------------------------------
 Usage: vlogql [options] [ARGS]
 
