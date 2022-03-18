@@ -86,7 +86,7 @@ Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 
 ['clickhouse', 'prometheus']
 ```
 
-#### Tails Logs by Tag
+#### Tail Logs by Tag _(websocket)_
 ```bash
 # LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"}' --tail
 
