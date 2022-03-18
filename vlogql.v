@@ -6,8 +6,8 @@ import flag
 import term
 import time
 import net.http
-import v.vmod
 import net.websocket
+//import v.vmod
 
 struct Response {
 mut:
@@ -130,10 +130,13 @@ fn tail_logs(server string, query string, show_labels bool) ? {
 
 fn main() {
 	mut fp := flag.new_flag_parser(os.args)
-	mod := vmod.from_file('./v.mod') or { panic(err) }
-	fp.application(mod.name)
-	fp.version(mod.version)
-	fp.description(mod.description)
+	//mod := vmod.from_file('./v.mod') or { panic(err) }
+	//fp.application(mod.name)
+	//fp.version(mod.version)
+	//fp.description(mod.description)
+	fp.application('vlogql')
+	fp.description('LogQL Query CLI')
+	fp.version('0.1.4')
 	fp.skip_executable()
 	env_limit := set_value(os.getenv('LOGQL_LIMIT')) or { '5' }
 	logql_limit := fp.int('limit', `l`, env_limit.int(), 'logql query limit [LOGQL_LIMIT]')
