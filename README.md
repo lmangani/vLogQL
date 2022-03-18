@@ -43,6 +43,7 @@ Options:
   -v, --label <string>      get label values
   -s, --start <string>      start nanosec timestamp
   -e, --end <string>        end nanosec timestamp
+  -x, --tail <bool>         tail mode
   -h, --help                display this help and exit
 ```
 
