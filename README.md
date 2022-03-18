@@ -29,7 +29,7 @@ git clone https://github.com/lmangani/vlogql
 
 ### 🔎 Usage
 ```
-vlogql v0.1.2
+vlogql v0.1.3
 -----------------------------------------------
 Usage: vlogql [options] [ARGS]
 
@@ -39,11 +39,11 @@ Options:
   -l, --limit <int>         logql query limit [LOGQL_LIMIT]
   -a, --api <string>        logql api [LOGQL_API]
   -q, --query <string>      logql query [LOGQL_QUERY]
-  -t, --labels <bool>       get labels
+  -t, --labels              get labels
   -v, --label <string>      get label values
   -s, --start <string>      start nanosec timestamp
   -e, --end <string>        end nanosec timestamp
-  -x, --tail <bool>         tail mode
+  -x, --tail                tail mode
   -h, --help                display this help and exit
 ```
 
@@ -84,6 +84,19 @@ Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 
 
 ---------- Values for: type
 ['clickhouse', 'prometheus']
+```
+
+#### Tails Logs by Tag
+```bash
+# LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"}' --tail
+
+---------- Logs Tail
+Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
+2022.03.18 16:54:47.634586 [ 1658 ] {} <Debug> system.query_views_log (2bbc858b-05df-49d1-abbc-858b05df69d1): Removing part from filesystem 202203_405891_405891_0
+2022.03.18 16:54:51.704528 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22425079_22559905_26963
+2022.03.18 16:54:51.704730 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559906_22559906_0
+2022.03.18 16:54:51.704910 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559907_22559907_0
+2022.03.18 16:54:51.705140 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559908_22559908_0
 ```
 
 -----
