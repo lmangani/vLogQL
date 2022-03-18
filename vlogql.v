@@ -107,7 +107,6 @@ fn tail_logs(server string, query string, show_labels bool) ? {
 		if msg.payload.len > 0 {
 			message := msg.payload.bytestr()
 			res := json.decode(Tail, message) or { exit(1) }
-			println('---------- Logs Tail')
 			for row in res.streams {
 				if show_labels {
 					print(term.gray('Log Labels: '))
