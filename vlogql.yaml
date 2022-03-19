@@ -1,7 +1,7 @@
 name: "vloqql"
 arch: "amd64"
 platform: "linux"
-version: "$VERSION"
+version: "v${VERSION}"
 section: "default"
 priority: "extra"
 replaces:
