@@ -22,6 +22,22 @@ jobs:
       run: v -o vlogql -prod vlogql.v
 #    - name: Run V tests
 #      run: v test .
+    - name: NFPM DEB
+      if: github.event_name != 'pull_request'
+      uses: skynet-core/nfpm@v1.4
+      id: deb-package
+      with:
+       target: vlogql.deb
+       config: "vlogql.yaml"
+       packager: "deb"
+    - name: NFPM RPM
+      if: github.event_name != 'pull_request'
+      uses: skynet-core/nfpm@v1.4
+      id: rpm-package
+      with:
+       target: vlogql.rpm
+       config: "vlogql.yaml"
+       packager: "rpm"
     - name: Get Time
       if: github.event_name != 'pull_request'
       id: time
@@ -37,6 +53,8 @@ jobs:
       with:
         release_config: |
             vlogql
+            vlogql.deb
+            vlogql.rpm
         tag_name: v${{ steps.time.outputs.time }}
         release_name: vlogql_${{ steps.time.outputs.time }}
         draft: false

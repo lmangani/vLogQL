@@ -1,0 +1,19 @@
+name: "vloqql"
+arch: "amd64"
+platform: "linux"
+version: "v0.1.4"
+section: "default"
+priority: "extra"
+replaces:
+- vlogql
+provides:
+- vlogql
+maintainer: "Lorenzo Mangani <lorenzo.mangani@gmail.com>"
+description: |
+    LogQL Query CLI for cLoki
+vendor: "QXIP"
+homepage: "http://cloki.org"
+license: "MIT"
+bindir: "/usr/local/bin"
+files:
+  vlogql: "/usr/local/bin/vlogql"
