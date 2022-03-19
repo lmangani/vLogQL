@@ -7,7 +7,8 @@ cLoki / LogQL Client in [vlang](https://vlang.io/)
 
 
 ### Instructions
-Download a [binary release](github.com/lmangani/vLogQL/releases/latest/download/vlogql) or build from source
+Download a [binary release](https://github.com/lmangani/vLogQL/releases/latest/download/vlogql) [[deb](https://github.com/lmangani/vLogQL/releases/latest/download/vlogql.deb), [rpm](https://github.com/lmangani/vLogQL/releases/latest/download/vlogql.rpm)] or build from source
+
 
 #### 📦 Download Binary
 ```
