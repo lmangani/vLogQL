@@ -27,6 +27,7 @@ jobs:
       uses: blinktag/nfpm@v2.3.1
       id: deb-package
       with:
+       target: vlogql.deb
        config: "vlogql.yaml"
        packager: "deb"
     - name: NFPM RPM
@@ -34,8 +35,9 @@ jobs:
       uses: blinktag/nfpm@v2.3.1
       id: rpm-package
       with:
+       target: vlogql.rpm
        config: "vlogql.yaml"
-       packager: "deb"
+       packager: "rpm"
     - name: Get Time
       if: github.event_name != 'pull_request'
       id: time
@@ -51,6 +53,8 @@ jobs:
       with:
         release_config: |
             vlogql
+            vlogql.deb
+            vlogql.rpm
         tag_name: v${{ steps.time.outputs.time }}
         release_name: vlogql_${{ steps.time.outputs.time }}
         draft: false
