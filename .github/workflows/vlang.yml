@@ -24,7 +24,7 @@ jobs:
 #      run: v test .
     - name: NFPM DEB
       if: github.event_name != 'pull_request'
-      uses: blinktag/nfpm@v2.3.1
+      uses: skynet-core/nfpm@v1.4
       id: deb-package
       with:
        target: vlogql.deb
@@ -32,7 +32,7 @@ jobs:
        packager: "deb"
     - name: NFPM RPM
       if: github.event_name != 'pull_request'
-      uses: blinktag/nfpm@v2.3.1
+      uses: skynet-core/nfpm@v1.4
       id: rpm-package
       with:
        target: vlogql.rpm
