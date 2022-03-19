@@ -24,11 +24,14 @@ jobs:
 #      run: v test .
     - name: Retrieve v.mod version
       run: |
-        echo ::set-env name=TAG_NAME::$(cat v.mod | grep version | awk -F"'" '{print $2}')
+         echo TAG_NAME=$(cat v.mod | grep version | awk -F"'" '{print $2}')" >> $GITHUB_ENV
+#        echo ::set-env name=TAG_NAME::$(cat v.mod | grep version | awk -F"'" '{print $2}')
     - name: NFPM DEB
       if: github.event_name != 'pull_request'
       uses: skynet-core/nfpm@v1.4
       id: deb-package
+      env:
+        VERSION: ${{ env.TAG_NAME }}
       with:
        target: vlogql_v${{ env.TAG_NAME }}.deb
        config: "vlogql.yaml"
@@ -37,6 +40,8 @@ jobs:
       if: github.event_name != 'pull_request'
       uses: skynet-core/nfpm@v1.4
       id: rpm-package
+      env:
+        VERSION: ${{ env.TAG_NAME }}
       with:
        target: vlogql_v${{ env.TAG_NAME }}.rpm
        config: "vlogql.yaml"
