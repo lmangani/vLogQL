@@ -30,11 +30,7 @@ git clone https://github.com/lmangani/vlogql
 
 ### 🔎 Usage
 ```
-vlogql v0.1.3
------------------------------------------------
 Usage: vlogql [options] [ARGS]
-
-Description: LogQL Query CLI
 
 Options:
   -l, --limit <int>         logql query limit [LOGQL_LIMIT]
