@@ -22,6 +22,20 @@ jobs:
       run: v -o vlogql -prod vlogql.v
 #    - name: Run V tests
 #      run: v test .
+    - name: NFPM DEB
+      if: github.event_name != 'pull_request'
+      uses: blinktag/nfpm@v2.3.1
+      id: deb-package
+      with:
+       config: "vlogql.yaml"
+       packager: "deb"
+    - name: NFPM RPM
+      if: github.event_name != 'pull_request'
+      uses: blinktag/nfpm@v2.3.1
+      id: rpm-package
+      with:
+       config: "vlogql.yaml"
+       packager: "deb"
     - name: Get Time
       if: github.event_name != 'pull_request'
       id: time
