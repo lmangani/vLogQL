@@ -3,8 +3,11 @@ name: vlang-build-pipeline
 
 on:
   push:
+    branches: [ master, main ]
     paths-ignore:
       - '**.md'
+  pull_request:
+    branches: [ master, main ]
 
 jobs:
   run:
@@ -22,20 +25,27 @@ jobs:
       run: v -o vlogql -prod vlogql.v
 #    - name: Run V tests
 #      run: v test .
+    - name: Retrieve v.mod version
+      run: |
+         echo TAG_NAME=$(cat v.mod | grep version | awk -F"'" '{print $2}') >> $GITHUB_ENV
     - name: NFPM DEB
       if: github.event_name != 'pull_request'
       uses: skynet-core/nfpm@v1.4
       id: deb-package
+      env:
+        VERSION: ${{ env.TAG_NAME }}
       with:
-       target: vlogql.deb
+       target: vlogql_v${{ env.TAG_NAME }}.deb
        config: "vlogql.yaml"
        packager: "deb"
     - name: NFPM RPM
       if: github.event_name != 'pull_request'
       uses: skynet-core/nfpm@v1.4
       id: rpm-package
+      env:
+        VERSION: ${{ env.TAG_NAME }}
       with:
-       target: vlogql.rpm
+       target: vlogql_v${{ env.TAG_NAME }}.rpm
        config: "vlogql.yaml"
        packager: "rpm"
     - name: Get Time
@@ -53,10 +63,10 @@ jobs:
       with:
         release_config: |
             vlogql
-            vlogql.deb
-            vlogql.rpm
+            vlogql_v${{ env.TAG_NAME }}.deb
+            vlogql_v${{ env.TAG_NAME }}.rpm
         tag_name: v${{ steps.time.outputs.time }}
-        release_name: vlogql_${{ steps.time.outputs.time }}
+        release_name: vlogql_v${{ env.TAG_NAME }}_${{ steps.time.outputs.time }}
         draft: false
         prerelease: false
         overwrite: true
