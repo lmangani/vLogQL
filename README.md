@@ -102,10 +102,14 @@ Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
 # LOGQL_API="https://cloki:3100" ./vlogql --canary
 
 ---------- Tail Canary Logs:
-PUSH Successful: {"streams":[{"stream": {"canary":"canary_vgKhkQ5g3S2s","type":"canary"}, "values":[ ["1649006282946000000", "ts=1649006282946000000 type=canary data=1111111111111111111111111111111111111111111111"] ]}]}
+PUSH Successful: {"streams":[{"stream": {"canary":"canary_9cwAkBFDlrcA","type":"canary"}, "values":[ ["1649007076406000000", "ts=1649007076406000000 count=3 type=canary tag=canary_9cwAkBFDlrcA"] ]}]}
 Sleeping 10 seconds...
-Log Labels: {'canary': 'canary_vgKhkQ5g3S2s', 'type': 'canary'}
-ts=1649006282946000000 type=canary data=1111111111111111111111111111111111111111111111
+Log Labels: {'canary': 'canary_9cwAkBFDlrcA', 'type': 'canary'}
+ts=1649007076406000000 count=3 type=canary tag=canary_9cwAkBFDlrcA
+PUSH Successful: {"streams":[{"stream": {"canary":"canary_9cwAkBFDlrcA","type":"canary"}, "values":[ ["1649007086482000000", "ts=1649007086482000000 count=4 type=canary tag=canary_9cwAkBFDlrcA"] ]}]}
+Sleeping 10 seconds...
+Log Labels: {'canary': 'canary_9cwAkBFDlrcA', 'type': 'canary'}
+ts=1649007086482000000 count=4 type=canary tag=canary_9cwAkBFDlrcA
 ```
 
 -----
