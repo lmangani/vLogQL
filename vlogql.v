@@ -5,6 +5,7 @@ import json
 import flag
 import term
 import time
+import rand
 import net.http
 import net.websocket
 import v.vmod
@@ -82,6 +83,11 @@ fn now(diff int) string {
 	return '${subts}000000'
 }
 
+fn now_iso() string {
+	mut timestamp := time.now().format_ss_micro().split(' ').join('T') + 'Z'
+	return timestamp
+}
+
 struct Tail {
 mut:
 	streams []Result
@@ -127,12 +133,63 @@ fn tail_logs(server string, query string, show_labels bool) ? {
 	}
 }
 
+fn canary_logs(server string, canary_string string, show_labels bool) ? {
+	query := '{canary="$canary_string"}'
+
+	socket := server.replace('http', 'ws')
+	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + query) ?
+
+	ws.on_open(fn (mut ws websocket.Client) ? {
+		eprintln('---------- Tail Canary Logs:')
+	})
+	ws.on_error(fn (mut ws websocket.Client, err string) ? {
+		println('---------- Tail error: $err')
+	})
+	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, show_labels &bool) ? {
+		if msg.payload.len > 0 {
+			message := msg.payload.bytestr()
+			res := json.decode(Tail, message) or { exit(1) }
+			for row in res.streams {
+				if show_labels {
+					print(term.gray('Log Labels: '))
+					print(term.bold('$row.stream\n'))
+				}
+				for log in row.values {
+					println(log[1])
+				}
+			}
+		}
+	}, show_labels)
+
+	ws.connect() or { println('error on connect: $err') }
+	ws.listen() or { println('error on listen $err') }
+	unsafe {
+		ws.free()
+	}
+}
+
+fn canary_emitter(server string, canary_string string, timer int) ? {
+	labels := '{"canary":"$canary_string","type":"canary"}'
+	timestamp := now(0)
+	log := 'ts=$timestamp type=canary data=1111111111111111111111111111111111111111111111'
+	payload := '{"streams":[{"stream": $labels, "values":[ ["$timestamp", "$log"] ]}]}'
+	data := http.post_json('$server/loki/api/v1/push', payload) or { exit(1) }
+	if data.status_code != 204 {
+		eprintln('PUSH error: $data.status_code.str()')
+	} else {
+		eprintln('PUSH Successful: $payload')
+	}
+	println('Sleeping $timer seconds...')
+	time.sleep(timer * time.second)
+	go canary_emitter(server, canary_string, timer)
+}
+
 fn main() {
 	mut fp := flag.new_flag_parser(os.args)
-	vm := vmod.decode( @VMOD_FILE ) or { panic(err.msg) }
-        fp.application('$vm.name')
-        fp.description('$vm.description')
-        fp.version('$vm.version')
+	vm := vmod.decode(@VMOD_FILE) or { panic(err.msg) }
+	fp.application('$vm.name')
+	fp.description('$vm.description')
+	fp.version('$vm.version')
 	fp.skip_executable()
 	env_limit := set_value(os.getenv('LOGQL_LIMIT')) or { '5' }
 	logql_limit := fp.int('limit', `l`, env_limit.int(), 'logql query limit [LOGQL_LIMIT]')
@@ -148,6 +205,8 @@ fn main() {
 
 	logql_tail := fp.bool('tail', `x`, false, 'tail mode')
 
+	logql_canary := fp.bool('canary', `c`, false, 'canary mode')
+
 	fp.finalize() or {
 		eprintln(err)
 		println(fp.usage())
@@ -157,11 +216,23 @@ fn main() {
 	if utf8_str_len(logql_query) > 0 {
 		if logql_tail {
 			tail_logs(logql_api, logql_query, logql_labels) or { exit(1) }
+		} else if logql_canary {
+			mut tag := rand.string_from_set('abcdefghiklmnopqrestuvwzABCDEFGHIKLMNOPQRSTUVWWZX0123456789',
+				12)
+			tag = 'canary_' + tag
+			go canary_emitter(logql_api, tag, 10)
+			canary_logs(logql_api, tag, logql_labels) or { exit(1) }
 		} else {
 			fetch_logs(logql_api, logql_query, logql_limit, logql_labels, logql_start,
 				logql_end)
 		}
 		return
+	} else if logql_canary {
+		mut tag := rand.string_from_set('abcdefghiklmnopqrestuvwzABCDEFGHIKLMNOPQRSTUVWWZX0123456789',
+			12)
+		tag = 'canary_' + tag
+		go canary_emitter(logql_api, tag, 10)
+		canary_logs(logql_api, tag, logql_labels) or { exit(1) }
 	} else if logql_labels {
 		fetch_labels(logql_api, '')
 		return

@@ -41,6 +41,7 @@ Options:
   -s, --start <string>      start nanosec timestamp
   -e, --end <string>        end nanosec timestamp
   -x, --tail                tail mode
+  -c, --canary              canary mode
   -h, --help                display this help and exit
 ```
 
@@ -94,6 +95,17 @@ Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
 2022.03.18 16:54:51.704730 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559906_22559906_0
 2022.03.18 16:54:51.704910 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559907_22559907_0
 2022.03.18 16:54:51.705140 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559908_22559908_0
+```
+
+#### Canary Logs _(push + websocket)_
+```bash
+# LOGQL_API="https://cloki:3100" ./vlogql --canary
+
+---------- Tail Canary Logs:
+PUSH Successful: {"streams":[{"stream": {"canary":"canary_vgKhkQ5g3S2s","type":"canary"}, "values":[ ["1649006282946000000", "ts=1649006282946000000 type=canary data=1111111111111111111111111111111111111111111111"] ]}]}
+Sleeping 10 seconds...
+Log Labels: {'canary': 'canary_vgKhkQ5g3S2s', 'type': 'canary'}
+ts=1649006282946000000 type=canary data=1111111111111111111111111111111111111111111111
 ```
 
 -----
