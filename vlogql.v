@@ -140,7 +140,7 @@ fn canary_logs(server string, canary_string string, show_labels bool) ? {
 	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + query) ?
 
 	ws.on_open(fn (mut ws websocket.Client) ? {
-		eprintln('---------- Tail Canary Logs:')
+		eprintln('---------- Tail Canary Logs')
 	})
 	ws.on_error(fn (mut ws websocket.Client, err string) ? {
 		println('---------- Tail error: $err')
