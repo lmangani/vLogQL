@@ -168,10 +168,10 @@ fn canary_logs(server string, canary_string string, show_labels bool) ? {
 	}
 }
 
-fn canary_emitter(server string, canary_string string, timer int) ? {
+fn canary_emitter(server string, canary_string string, timer int, count int) ? {
 	labels := '{"canary":"$canary_string","type":"canary"}'
 	timestamp := now(0)
-	log := 'ts=$timestamp type=canary data=1111111111111111111111111111111111111111111111'
+	log := 'ts=$timestamp count=$count type=canary tag=$canary_string'
 	payload := '{"streams":[{"stream": $labels, "values":[ ["$timestamp", "$log"] ]}]}'
 	data := http.post_json('$server/loki/api/v1/push', payload) or { exit(1) }
 	if data.status_code != 204 {
@@ -181,7 +181,8 @@ fn canary_emitter(server string, canary_string string, timer int) ? {
 	}
 	println('Sleeping $timer seconds...')
 	time.sleep(timer * time.second)
-	go canary_emitter(server, canary_string, timer)
+	next := count + 1
+	go canary_emitter(server, canary_string, timer, next)
 }
 
 fn main() {
@@ -220,7 +221,7 @@ fn main() {
 			mut tag := rand.string_from_set('abcdefghiklmnopqrestuvwzABCDEFGHIKLMNOPQRSTUVWWZX0123456789',
 				12)
 			tag = 'canary_' + tag
-			go canary_emitter(logql_api, tag, 10)
+			go canary_emitter(logql_api, tag, 10, 0)
 			canary_logs(logql_api, tag, logql_labels) or { exit(1) }
 		} else {
 			fetch_logs(logql_api, logql_query, logql_limit, logql_labels, logql_start,
@@ -231,7 +232,7 @@ fn main() {
 		mut tag := rand.string_from_set('abcdefghiklmnopqrestuvwzABCDEFGHIKLMNOPQRSTUVWWZX0123456789',
 			12)
 		tag = 'canary_' + tag
-		go canary_emitter(logql_api, tag, 10)
+		go canary_emitter(logql_api, tag, 10, 0)
 		canary_logs(logql_api, tag, logql_labels) or { exit(1) }
 	} else if logql_labels {
 		fetch_labels(logql_api, '')
