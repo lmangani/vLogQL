@@ -1,12 +1,12 @@
 module main
 
 import os
-import json { decode }
+import json
 import flag
 import term
 import time
 import rand
-import net.http { post_json }
+import net.http
 import net.websocket
 import v.vmod
 
@@ -89,7 +89,7 @@ fn canary_logs(mut app App, canary_string string) ? {
 			diff_ts := now(0).i64() - app.last_ts.i64()
 			app.diff_ts = diff_ts.str()
 			message := msg.payload.bytestr()
-			res := decode(Tail, message) or { exit(1) }
+			res := json.decode(Tail, message) or { exit(1) }
 			for row in res.streams {
 				if app.labels {
 					print(term.gray('Log Labels: '))
@@ -123,7 +123,7 @@ fn canary_emitter(mut app App, canary_string string, timer int, count int) ? {
 	timestamp := now(0)
 	mut log := 'ts=$timestamp count=$count type=canary tag=$canary_string delay=$app.diff_ts'
 	payload := '{"streams":[{"stream": $labels, "values":[ ["$timestamp", "$log"] ]}]}'
-	data := post_json('$app.api/loki/api/v1/push', payload) or { exit(1) }
+	data := http.post_json('$app.api/loki/api/v1/push', payload) or { exit(1) }
 	if data.status_code != 204 {
 		eprintln('PUSH error: $data.status_code')
 	} else {
