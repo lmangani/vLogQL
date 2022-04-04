@@ -1,4 +1,3 @@
-# file: .github/workflows/vlang-build-pipeline.yml
 name: vlang-build-pipeline
 
 on:
@@ -21,8 +20,10 @@ jobs:
       with:
         v-version: latest
       id: v
-    - name: Build repository app
+    - name: Build app
       run: v -o vlogql -prod vlogql.v
+    - name: Build canary app
+      run: v -o vlogql-canary -prod vlogql-canary.v
 #    - name: Run V tests
 #      run: v test .
     - name: Retrieve v.mod version
@@ -63,6 +64,7 @@ jobs:
       with:
         release_config: |
             vlogql
+            vlogql-canary
             vlogql_v${{ env.TAG_NAME }}.deb
             vlogql_v${{ env.TAG_NAME }}.rpm
         tag_name: v${{ steps.time.outputs.time }}
