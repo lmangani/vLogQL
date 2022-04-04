@@ -45,8 +45,8 @@ Options:
   -h, --help                display this help and exit
 ```
 
-#### Examples
-#### Query w/o Labels
+#### ⭐ Examples 
+##### Query w/o Labels
 ```bash
 # LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 5
 
@@ -58,7 +58,7 @@ Options:
 2022.03.13 10:39:19.759982 [ 29849 ] {115c1357-81d3-4277-ab04-882306f76e9d} <Debug> DiskLocal: Reserving 1.00 MiB on disk `default`, having unreserved 2.63 TiB.
 ```
 
-#### Query w/ Labels
+##### Query w/ Labels
 ```bash
 # LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 4 --labels
 
@@ -69,14 +69,14 @@ Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 
 2022.03.14 09:53:31.021759 [ 19639 ] {785ba1fa-3be3-4023-8a95-de4b92c096a4} <Debug> MemoryTracker: Peak memory usage (for query): 8.18 MiB.
 2022.03.14 09:53:31.017389 [ 19639 ] {a34cbcc9-d11a-4a0a-8c7a-634e00322900} <Debug> MemoryTracker: Peak memory usage (for query): 4.14 MiB.
 ```
-#### Query Labels
+##### Query Labels
 ```bash
 # LOGQL_API="https://cloki:3100" ./vlogql --labels
 
 ---------- Labels:
 ['response', 'host', 'type']
 ```
-#### Query Label Values
+##### Query Label Values
 ```bash
 # LOGQL_API="https://cloki:3100" ./vlogql --label type
 
@@ -84,7 +84,7 @@ Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 
 ['clickhouse', 'prometheus']
 ```
 
-#### Tail Logs by Tag _(websocket)_
+##### Tail Logs by Tag _(websocket)_
 ```bash
 # LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"}' --tail
 
@@ -97,7 +97,7 @@ Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
 2022.03.18 16:54:51.705140 [ 1658 ] {} <Debug> cloki.time_series (bfb2e93e-f78d-4692-bfb2-e93ef78d8692): Removing part from filesystem 20220318_22559908_22559908_0
 ```
 
-#### Canary Logs _(push + websocket)_
+##### Canary Logs _(push + websocket)_
 ```bash
 # LOGQL_API="https://cloki:3100" CANARY_TIMER=10 ./vlogql --canary --labels
 
