@@ -101,7 +101,7 @@ Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
 ```bash
 # LOGQL_API="https://cloki:3100" CANARY_TIMER=10 ./vlogql --canary --labels
 
----------- Tail Canary Logs:
+---------- Tail Canary Logs
 PUSH Successful: {"streams":[{"stream": {"canary":"canary_9cwAkBFDlrcA","type":"canary"}, "values":[ ["1649007076406000000", "ts=1649007076406000000 count=3 type=canary tag=canary_9cwAkBFDlrcA"] ]}]}
 Sleeping 10 seconds...
 Log Labels: {'canary': 'canary_9cwAkBFDlrcA', 'type': 'canary'}
