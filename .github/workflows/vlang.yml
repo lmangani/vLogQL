@@ -24,8 +24,8 @@ jobs:
       run: v -o vlogql -prod vlogql.v
     - name: Build canary app
       run: v -o vlogql-canary -prod vlogql-canary.v
-#    - name: Run V tests
-#      run: v test .
+    - name: Compress Binaries
+      run: upx vlogql vlogql-canary
     - name: Retrieve v.mod version
       run: |
          echo TAG_NAME=$(cat v.mod | grep version | awk -F"'" '{print $2}') >> $GITHUB_ENV
