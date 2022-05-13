@@ -71,7 +71,7 @@ struct Labels {
 }
 
 fn fetch_labels(api string, label string) {
-	if utf8_str_len(label) > 0 {
+	if label.len_utf8() > 0 {
 		data := http.get_text('$api/loki/api/v1/label/$label/values')
 		res := json.decode(Labels, data) or { exit(1) }
 		println('---------- Values for: $label')
@@ -224,7 +224,7 @@ fn main() {
 	mut app := &App{}
 	app.counter = (0).str()
 	mut fp := flag.new_flag_parser(os.args)
-	vm := vmod.decode(@VMOD_FILE) or { panic(err.msg) }
+	vm := vmod.decode(@VMOD_FILE) or { panic(err.msg()) }
 	fp.application('$vm.name')
 	fp.description('$vm.description')
 	fp.version('$vm.version')
@@ -263,7 +263,7 @@ fn main() {
 		return
 	}
 
-	if utf8_str_len(logql_query) > 0 {
+	if logql_query.len_utf8() > 0 {
 		if logql_tail {
 			tail_logs(app) or { exit(1) }
 		} else if logql_canary {
@@ -287,7 +287,7 @@ fn main() {
 	} else if logql_labels {
 		fetch_labels(logql_api, '')
 		return
-	} else if utf8_str_len(logql_label) > 0 {
+	} else if logql_label.len_utf8() > 0 {
 		fetch_labels(logql_api, logql_label)
 		return
 	} else {

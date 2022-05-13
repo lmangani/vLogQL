@@ -141,7 +141,7 @@ fn main() {
 	mut app := &App{}
 	app.counter = (0).str()
 	mut fp := flag.new_flag_parser(os.args)
-	vm := vmod.decode(@VMOD_FILE) or { panic(err.msg) }
+	vm := vmod.decode(@VMOD_FILE) or { panic(err.msg()) }
 	fp.application('$vm.name (canary)')
 	fp.description('$vm.description (canary)')
 	fp.version('$vm.version')
