@@ -115,4 +115,4 @@ ts=1649007086482000000 count=4 type=canary tag=canary_9cwAkBFDlrcA
 -----
 
 ### License
-Licensed under MIT, sponsored by [qxip](https://metrico.in) as part of the [cLoki](https://cloki.org) project
+Licensed under MIT, sponsored by [qxip](https://metrico.in) as part of the [metrico/qryn](https://metrico.in) project
