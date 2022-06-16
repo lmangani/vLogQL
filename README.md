@@ -3,7 +3,7 @@
 [![vlang-build-pipeline](https://github.com/lmangani/vLogQL/actions/workflows/vlang.yml/badge.svg?branch=main)](https://github.com/lmangani/vLogQL/actions/workflows/vlang.yml)
 
 # vLogQL
-LogQL CLI Client in [vlang](https://vlang.io/)
+Tiny, portable, static LogQL CLI Client in [vlang](https://vlang.io/)
 
 
 ### Instructions
