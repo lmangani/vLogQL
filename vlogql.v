@@ -60,12 +60,13 @@ fn fetch_logs(app App) {
 			print(term.bold('$row.stream\n'))
 		}
 		for log in row.values {
-			if app.ts {
-				
-				println('${time.unix(log[0].i64)}: ${log[1]}')	
+			if app.ts {	
+				ts_microseconds := ((log[0].i64())%1000000000)/1000
+				ts := time.unix2(log[0].i64()/1000000000,int(ts_microseconds))
+				println('${ts.format_ss_milli()}: ${log[1]}')
 			}
 			else{
-				println(log[1])	
+				println(log[1])
 			}
 		}
 	}
