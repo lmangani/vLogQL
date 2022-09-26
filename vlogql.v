@@ -23,6 +23,7 @@ mut:
 	end     string = '0'
 	labels  bool
 	debug   bool
+	ts   	bool
 	timer   int
 }
 
@@ -52,14 +53,21 @@ struct Values {
 fn fetch_logs(app App) {
 	data := http.get_text('$app.api/loki/api/v1/query_range?query=$app.query&limit=$app.limit&start=$app.start&end=$app.end')
 	res := json.decode(Response, data) or { exit(1) }
-	println('---------- Logs for: $app.query')
+	println('---------- Logs for: $app.query')	
 	for row in res.data.result {
 		if app.labels {
 			print(term.gray('Log Labels: '))
 			print(term.bold('$row.stream\n'))
 		}
 		for log in row.values {
-			println(log[1])
+			if app.ts {	
+				ts_microseconds := ((log[0].i64())%1000000000)/1000
+				ts := time.unix2(log[0].i64()/1000000000,int(ts_microseconds))
+				println('${ts.format_ss_milli()}: ${log[1]}')
+			}
+			else{
+				println(log[1])
+			}
 		}
 	}
 	return
@@ -245,6 +253,9 @@ fn main() {
 	logql_labels := fp.bool('labels', `t`, false, 'get labels')
 	logql_label := fp.string('label', `v`, '', 'get label values')
 	app.labels = logql_labels
+	
+	logql_timestamp := fp.bool('timestamp', `z`, false, 'get timestamp')
+	app.ts = logql_timestamp	
 
 	logql_start := fp.string('start', `s`, now(3600), 'start nanosec timestamp')
 	logql_end := fp.string('end', `e`, now(0), 'end nanosec timestamp')

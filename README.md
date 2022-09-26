@@ -38,6 +38,7 @@ Options:
   -q, --query <string>      logql query [LOGQL_QUERY]
   -t, --labels              get labels
   -v, --label <string>      get label values
+  -z, --timestamp           get timestamp
   -s, --start <string>      start nanosec timestamp
   -e, --end <string>        end nanosec timestamp
   -x, --tail                tail mode
