@@ -49,7 +49,7 @@ Options:
 #### ⭐ Examples 
 ##### Query w/o Labels
 ```bash
-# LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 5
+# LOGQL_API="https://qryn:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 5
 
 ---------- Logs for: {type="clickhouse"} |~ "MiB"
 2022.03.13 10:39:19.765860 [ 29849 ] {} <Debug> MemoryTracker: Peak memory usage (for query): 8.11 MiB.
@@ -61,7 +61,7 @@ Options:
 
 ##### Query w/ Labels
 ```bash
-# LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 4 --labels
+# LOGQL_API="https://qryn:3100" ./vlogql --query '{type="clickhouse"} |~ "MiB"' --limit 4 --labels
 
 ---------- Logs for: {type="clickhouse"} |~ "MiB"
 Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 'clickhouse'}
@@ -72,14 +72,14 @@ Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 
 ```
 ##### Query Labels
 ```bash
-# LOGQL_API="https://cloki:3100" ./vlogql --labels
+# LOGQL_API="https://qryn:3100" ./vlogql --labels
 
 ---------- Labels:
 ['response', 'host', 'type']
 ```
 ##### Query Label Values
 ```bash
-# LOGQL_API="https://cloki:3100" ./vlogql --label type
+# LOGQL_API="https://qryn:3100" ./vlogql --label type
 
 ---------- Values for: type
 ['clickhouse', 'prometheus']
@@ -87,7 +87,7 @@ Log Labels: {'pid': '19639', 'level': 'Debug', 'call': 'MemoryTracker', 'type': 
 
 ##### Tail Logs by Tag _(websocket)_
 ```bash
-# LOGQL_API="https://cloki:3100" ./vlogql --query '{type="clickhouse"}' --tail
+# LOGQL_API="https://qryn:3100" ./vlogql --query '{type="clickhouse"}' --tail
 
 ---------- Logs Tail
 Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
@@ -100,7 +100,7 @@ Log Labels: {'pid': '1658', 'level': 'Debug', 'type': 'clickhouse'}
 
 ##### Canary Logs _(push + websocket)_
 ```bash
-# LOGQL_API="https://cloki:3100" CANARY_TIMER=10 ./vlogql --canary --labels
+# LOGQL_API="https://qryn:3100" CANARY_TIMER=10 ./vlogql --canary --labels
 
 ---------- Tail Canary Logs
 PUSH Successful: {"streams":[{"stream": {"canary":"canary_9cwAkBFDlrcA","type":"canary"}, "values":[ ["1649007076406000000", "ts=1649007076406000000 count=3 type=canary tag=canary_9cwAkBFDlrcA"] ]}]}
