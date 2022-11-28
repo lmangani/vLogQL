@@ -72,19 +72,19 @@ mut:
 	streams []Result
 }
 
-fn canary_logs(mut app App, canary_string string) ? {
+fn canary_logs(mut app App, canary_string string)! {
 	query := '{canary="$canary_string"}'
 
 	socket := app.api.replace('http', 'ws')
-	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + query) ?
+	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + query) !
 
-	ws.on_open(fn (mut ws websocket.Client) ? {
+	ws.on_open(fn (mut ws websocket.Client)! {
 		println('---------- Tail Canary Logs')
 	})
-	ws.on_error(fn (mut ws websocket.Client, err string) ? {
+	ws.on_error(fn (mut ws websocket.Client, err string)! {
 		eprintln('---------- Tail error: $err')
 	})
-	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, mut app App) ? {
+	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, mut app App)! {
 		if msg.payload.len > 0 {
 			diff_ts := now(0).i64() - app.last_ts.i64()
 			app.diff_ts = diff_ts.str()
@@ -118,7 +118,7 @@ fn canary_logs(mut app App, canary_string string) ? {
 	}
 }
 
-fn canary_emitter(mut app App, canary_string string, timer int, count int) ? {
+fn canary_emitter(mut app App, canary_string string, timer int, count int)! {
 	labels := '{"canary":"$canary_string","type":"canary"}'
 	timestamp := now(0)
 	mut log := 'ts=$timestamp count=$count type=canary tag=$canary_string delay=$app.diff_ts'
