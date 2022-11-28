@@ -122,23 +122,23 @@ mut:
 	streams []Result
 }
 
-fn tail_logs(app App) ? {
+fn tail_logs(app App)! {
 	socket := app.api.replace('http', 'ws')
-	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + app.query) ?
+	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + app.query)!
 	// use on_open_ref if you want to send any reference object
-	ws.on_open(fn (mut ws websocket.Client) ? {
+	ws.on_open(fn (mut ws websocket.Client)! {
 		println('---------- Tail Logs')
 	})
 	// use on_error_ref if you want to send any reference object
-	ws.on_error(fn (mut ws websocket.Client, err string) ? {
+	ws.on_error(fn (mut ws websocket.Client, err string)! {
 		eprintln('---------- Tail error: $err')
 	})
 	// use on_close_ref if you want to send any reference object
-	// ws.on_close(fn (mut ws websocket.Client, code int, reason string) ? {
+	// ws.on_close(fn (mut ws websocket.Client, code int, reason string)! {
 	//	eprintln('---------- Tail closed')
 	// })
 	// use on_message_ref if you want to send any reference object
-	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, app &App) ? {
+	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, app &App)! {
 		if msg.payload.len > 0 {
 			message := msg.payload.bytestr()
 			res := json.decode(Tail, message) or { exit(1) }
@@ -162,19 +162,19 @@ fn tail_logs(app App) ? {
 	}
 }
 
-fn canary_logs(mut app App, canary_string string) ? {
+fn canary_logs(mut app App, canary_string string)! {
 	query := '{canary="$canary_string"}'
 
 	socket := app.api.replace('http', 'ws')
-	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + query) ?
+	mut ws := websocket.new_client(socket + '/loki/api/v1/tail?query=' + query)!
 
-	ws.on_open(fn (mut ws websocket.Client) ? {
+	ws.on_open(fn (mut ws websocket.Client)! {
 		println('---------- Tail Canary Logs')
 	})
-	ws.on_error(fn (mut ws websocket.Client, err string) ? {
+	ws.on_error(fn (mut ws websocket.Client, err string)! {
 		eprintln('---------- Tail error: $err')
 	})
-	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, mut app App) ? {
+	ws.on_message_ref(fn (mut ws websocket.Client, msg &websocket.Message, mut app App)! {
 		if msg.payload.len > 0 {
 			diff_ts := now(0).i64() - app.last_ts.i64()
 			app.diff_ts = diff_ts.str()
@@ -208,7 +208,7 @@ fn canary_logs(mut app App, canary_string string) ? {
 	}
 }
 
-fn canary_emitter(mut app App, canary_string string, timer int, count int) ? {
+fn canary_emitter(mut app App, canary_string string, timer int, count int)! {
 	labels := '{"canary":"$canary_string","type":"canary"}'
 	timestamp := now(0)
 	mut log := 'ts=$timestamp count=$count type=canary tag=$canary_string delay=$app.diff_ts'
