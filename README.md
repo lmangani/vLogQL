@@ -1,4 +1,4 @@
-<img src='https://user-images.githubusercontent.com/1423657/147935343-598c7dfd-1412-4bad-9ac6-636994810443.png' style="margin-left:-10px" width=180>
+<img src='https://user-images.githubusercontent.com/1423657/218816262-e0e8d7ad-44d0-4a7d-9497-0d383ed78b83.png' style="margin-left:-10px" width=200>
 
 [![vlang-build-pipeline](https://github.com/lmangani/vLogQL/actions/workflows/vlang.yml/badge.svg?branch=main)](https://github.com/lmangani/vLogQL/actions/workflows/vlang.yml)
 
