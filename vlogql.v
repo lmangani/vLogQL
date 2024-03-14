@@ -35,7 +35,7 @@ mut:
 
 struct Data {
 mut:
-	res_type string   [json: 'resultType']
+	res_type string   @[json: 'resultType']
 	result   []Result
 }
 
@@ -62,7 +62,7 @@ fn fetch_logs(app App) {
 		for log in row.values {
 			if app.ts {	
 				ts_microseconds := ((log[0].i64())%1000000000)/1000
-				ts := time.unix2(log[0].i64()/1000000000,int(ts_microseconds))
+				ts := time.unix_microsecond(log[0].i64()/1000000000,int(ts_microseconds))
 				println('${ts.format_ss_milli()}: ${log[1]}')
 			}
 			else{
