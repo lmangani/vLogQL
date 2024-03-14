@@ -34,7 +34,7 @@ mut:
 
 struct Data {
 mut:
-	res_type string   [json: 'resultType']
+	res_type string   @[json: 'resultType']
 	result   []Result
 }
 
